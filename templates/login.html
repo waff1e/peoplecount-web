@@ -1,0 +1,86 @@
+{% include 'header.html' %}
+<div class="wrap">
+    <div class="header">
+        <div class="title">쓰레기 무단투기 단속</div>
+    </div>
+    <div class="container">
+        <div class="content">
+            <div class="input_area">
+                <span class="id_box"><input class="id_input" maxlength="20" placeholder="아이디"></span>
+            </div>
+            <div>
+                <div class="input_area">
+                    <span class="pw_box"><input class="pw_input" type="password" maxlength="20" placeholder="비밀번호"></span>
+                </div>
+            </div>
+            <div>
+                <button class="btn_login">로그인</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'script.html' %}
+<script>
+var id_input = $('.id_input'),
+    pw_input = $('.pw_input'),
+    focus_box = function(){},
+    is_run = false;
+
+focus_box = function(){
+    id_input.focus(function(){
+        var $parent = $('.id_box').parent("div");
+        $parent.addClass("input_area focus");
+    });
+    id_input.blur(function(){
+        var $parent = $('.id_box').parent("div");
+        $parent.removeClass("focus");
+    });
+
+    pw_input.focus(function(){
+        var $parent = $('.pw_box').parent("div");
+        $parent.addClass("input_area focus");
+    });
+    pw_input.blur(function(){
+        var $parent = $('.pw_box').parent("div");
+        $parent.removeClass("focus");
+    });
+}
+
+$('.btn_login').on('click', function(){
+    if(is_run == true){
+        return false;
+    }
+    is_run = true;
+    var id = $('.id_input'),
+        pw = $('.pw_input');
+
+    check = common.check_datas({
+        data: [id, pw],
+        type: ['id', 'pw']
+        });
+    if(check.result == false){
+        alert(check.msg);
+        is_run = false;
+        return false;
+    }
+
+    common.ajax({
+        url: '/user',
+        type: 'POST',
+        data: {id : id.val(), pw : pw.val()},
+        callback: function(datas){
+            is_run = false;
+            if(datas.result == 'success'){
+                location.href="/main";
+            }
+        }
+
+    });
+});
+
+
+
+focus_box();
+</script>
+{% include 'footer.html' %}
