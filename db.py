@@ -5,6 +5,6 @@ import pymysql
 # MySQL Connection 연결
 def get_db():
     conn = pymysql.connect(host='localhost', user='root', password='1358',
-                       db='myproject', charset='utf8', autocommit=False)
+                       db='people', charset='utf8', autocommit=False)
 
     return conn
