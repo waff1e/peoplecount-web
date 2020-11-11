@@ -27,6 +27,13 @@ def main_page():
     else:
         return redirect('/login')
 
+@app.route('/stats')
+def stats():
+    return render_template('div1.html')
+
+@app.route('/section')
+def section():
+    return render_template('div2.html')
 
 class LoginUser(Resource):
     def post(self):
@@ -56,4 +63,4 @@ api.add_resource(LoginUser, '/user')
 api.add_resource(GetData, '/get_data')
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='192.168.0.19', port=8000, debug=True)
