@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify, session, redirect, app
 from flask_restful import Resource, Api, reqparse
 import sql
 from datetime import timedelta
+#import lookup
 
 app = Flask(__name__)
 api = Api(app)
@@ -29,7 +30,16 @@ def main_page():
 
 @app.route('/stats')
 def stats():
-    return render_template('div1.html')
+   #test  = lookup.lookup_database() 
+   #print(test)
+   
+   current_people = 0
+   today_total_people = 0
+   density = 0
+   total = 0
+
+
+   return render_template('div1.html', current_people=current_people, today_total_people=today_total_people, density=density, total=total)
 
 @app.route('/section')
 def section():
