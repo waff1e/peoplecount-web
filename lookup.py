@@ -12,20 +12,16 @@ def lookup_database():
     try:
 	
         cur = con.cursor()
-        print("일단 연결은 됨")
         sql = f"SELECT * FROM people_counting where datetime='{cur_time}';"
                 
         cur.execute(sql)
         result = cur.fetchall()
 		
-        print(result[-1])
 
     except:
         print('예외가 발생했습니다.')
 
     finally:
         con.close()
-
-lookup_database()
-
-
+	
+    return result # 나중에 오류가 난다면 여기를 의심해볼 것

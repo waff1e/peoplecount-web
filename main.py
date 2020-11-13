@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify, session, redirect, app
 from flask_restful import Resource, Api, reqparse
 import sql
 from datetime import timedelta
-#import lookup
+import lookup
 
 app = Flask(__name__)
 api = Api(app)
@@ -30,16 +30,33 @@ def main_page():
 
 @app.route('/stats')
 def stats():
-   #test  = lookup.lookup_database() 
-   #print(test)
-   
-   current_people = 0
-   today_total_people = 0
-   density = 0
-   total = 0
+    try:
+        test = lookup.lookup_database() 
+        temp = test[-1]
+        
 
+        current_people = int(temp[2]) - int(temp[3])
+        today_total_people = temp[2]
+		
+        total = 1 # 데이터 베이스 상에서 예를 들어서 11월 누적 방문객 수를 알고 싶다면 11월의 enter 칼럼의 값을 다 가져와서 다 더해준다.
+       
+        limit = 50
+        
+        density = round(current_people / limit * 100)
+        if density < 0: 
+            density = 0
 
-   return render_template('div1.html', current_people=current_people, today_total_people=today_total_people, density=density, total=total)
+        if current_people < 0:
+            current_people = 0
+		
+    except:
+        print("People Counter Off")
+        current_people = 0
+        today_total_people = 0
+        density = 0
+        total = 0
+
+    return render_template('div1.html', current_people=current_people, today_total_people=today_total_people, density=density, total=total)
 
 @app.route('/section')
 def section():
@@ -73,4 +90,4 @@ api.add_resource(LoginUser, '/user')
 api.add_resource(GetData, '/get_data')
 
 if __name__ == "__main__":
-    app.run(host='192.168.0.19', port=8000, debug=True)
+    app.run(host='localhost', port=8000, debug=True)
