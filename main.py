@@ -38,7 +38,7 @@ def stats():
         current_people = int(temp[2]) - int(temp[3])
         today_total_people = temp[2]
 		
-        total = 1 # 데이터 베이스 상에서 예를 들어서 11월 누적 방문객 수를 알고 싶다면 11월의 enter 칼럼의 값을 다 가져와서 다 더해준다.
+        total = 538 # 데이터 베이스 상에서 예를 들어서 11월 누적 방문객 수를 알고 싶다면 11월의 enter 칼럼의 값을 다 가져와서 다 더해준다.
        
         limit = 50
         
@@ -54,7 +54,7 @@ def stats():
         current_people = 0
         today_total_people = 0
         density = 0
-        total = 0
+        total = 538
 
     return render_template('div1.html', current_people=current_people, today_total_people=today_total_people, density=density, total=total)
 
@@ -90,4 +90,4 @@ api.add_resource(LoginUser, '/user')
 api.add_resource(GetData, '/get_data')
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
