@@ -31,21 +31,24 @@ def main_page():
 @app.route('/stats')
 def stats():
     try:
-        test = lookup.lookup_database() 
-        temp = test[-1]
+
+        person, pre_person = lookup.lookup_database() 
+
+        temp = person[-1]
+
+        print('this the test')
         
 
         current_people = int(temp[2]) - int(temp[3])
         today_total_people = temp[2]
 		
-        total = 538 # 데이터 베이스 상에서 예를 들어서 11월 누적 방문객 수를 알고 싶다면 11월의 enter 칼럼의 값을 다 가져와서 다 더해준다.
+        total = pre_person[0][1] 
        
         limit = 50
         
         density = round(current_people / limit * 100)
         if density < 0: 
             density = 0
-
         if current_people < 0:
             current_people = 0
 		
@@ -54,7 +57,7 @@ def stats():
         current_people = 0
         today_total_people = 0
         density = 0
-        total = 538
+        total = 0
 
     return render_template('div1.html', current_people=current_people, today_total_people=today_total_people, density=density, total=total)
 

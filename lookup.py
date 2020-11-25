@@ -8,15 +8,18 @@ def lookup_database():
     now = datetime.datetime.now()
     
     cur_time = str(now.strftime('%Y-%m-%d %H:%M:%S'))
-		
+    pre_month = int(now.strftime('%m')) - 1
     try:
-	
+        	
         cur = con.cursor()
         sql = f"SELECT * FROM people_counting where datetime='{cur_time}';"
-                
+        sql2 = f"SELECT * FROM monthly_user where month LIKE {pre_month};"
+
         cur.execute(sql)
         result = cur.fetchall()
-		
+        cur.execute(sql2)
+        total_person = cur.fetchall()
+
 
     except:
         print('예외가 발생했습니다.')
@@ -24,4 +27,15 @@ def lookup_database():
     finally:
         con.close()
 	
-    return result # 나중에 오류가 난다면 여기를 의심해볼 것
+    return result, total_person # 나중에 오류가 난다면 여기를 의심해볼 것
+
+
+
+
+
+
+
+
+
+
+
